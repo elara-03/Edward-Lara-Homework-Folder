@@ -1,0 +1,15 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Run active file (no debug, delete build)",
+      "type": "cppdbg",
+      "request": "launch",
+      "noDebug": true,
+      "program": "${workspaceFolder}/build/${fileBasenameNoExtension}",
+      "cwd": "${workspaceFolder}",
+      "preLaunchTask": "Build active file -> build/",
+      "postDebugTask": "Cleanup active build"
+    }
+  ]
+}
