@@ -1,5 +1,20 @@
 #include <iostream>
 #include <array>
+#include <iostream>
+#include <array>
+
+void findMatches(int data[], size_t size1, int data1[], size_t size2) {
+    std::cout << "\nMatching numbers: ";
+
+for(size_t i = 0; i < size1; i++) {
+for(size_t j = 0; j < size2; j++) {
+    if(data[i] == data1[j]) {
+std::cout << data[i] << " ";
+break;
+    }
+}
+}
+}
 
 int main() {
     int data[] {1,3,6,7,9};
@@ -23,4 +38,6 @@ for(size_t i = 0; i < std::size(data1); i++) {
 std::cout << data1[i] << " ";
 }
 
+findMatches(data, std::size(data), data1, std::size(data1));
 }
+
