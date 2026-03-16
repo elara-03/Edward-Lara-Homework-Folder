@@ -10,12 +10,14 @@ private:
 uint8_t motorState; // Each bit represents the status of a motor (on/off)
 uint8_t overheatingMotors = 0; // Motors that are overheating
 int turnCount;
+
 // Function to randomly initialize motors (on/off) and overheat one motor
 void initialize() {
 std::srand(time(0));
 do {
 motorState = static_cast<uint8_t>(std::rand() % 256);
 }
+
 while (motorState == 0); // Ensure at least one motor is ON
 turnCount = 0;
 updateOverheating();
@@ -32,6 +34,7 @@ if ( (motorState & static_cast<uint8_t>(~overheatingMotors)) == 0 ) {
 turnCount++; // Still counts as a "turn event"
 return;
 }
+
 else{
 int newMotor = 0;
 do {
@@ -48,6 +51,7 @@ overheatingMotors |= static_cast<uint8_t>(1u << newMotor);
 turnCount++;
 }
 }
+
 void displayStatus() {
 std::cout << "Motor State (ON/OFF): " << std::bitset<8>(motorState)
 <<std::endl;
@@ -55,9 +59,14 @@ std::cout << "Overheating Motors: " << std::bitset<8>(overheatingMotors)<<
 std::endl;
 std::cout << "Turn Count: " << turnCount << std::endl;
 }
+
 public:
 MotorStatus() {
 initialize();
+}
+void showStatus() {
+    displayStatus();
+
 }
 
 // =====================================
@@ -69,16 +78,14 @@ bool turnOff(uint8_t guess) {
     if (guess == overheatingMotors) {
 
 // turn off the overheating motors
-    motorState &= ~overheatingMotors;
-
-    std::cout << "Correct! Overheating motors are now off.\n";
-    return true;
+motorState &= ~overheatingMotors;
+std::cout << "Correct! Overheating motors are now off.\n";
+return true;
 }
 
 // turn off only motors that are overheating AND guessed
-    motorState &= ~(overheatingMotors & guess);
-
-    std::cout << "Incorrect guess!\n";
+motorState &= ~(overheatingMotors & guess);
+std::cout << "Incorrect guess!\n";
 
 // add another overheating motor
 updateOverheating();
@@ -95,6 +102,7 @@ if (s.size() == 8 && s.find_first_not_of("01") == std::string::npos) {
 for (char c : s) {
 value = (value << 1) | (c - '0');
 }
+
 return value;
 }
 
@@ -109,13 +117,16 @@ ok = false;
 } catch (...) {
 ok = false;
 }
+
 if (ok) {
 return value;
 }
 }
+
 std::cout << "Invalid input. Use 8-bit binary (0b00101000) or hex (0x28).\n\n";
 return -1; 
 }
+
 int main() {
 MotorStatus motorStatus;
 uint8_t guess = 0;
@@ -129,6 +140,12 @@ std::string s;
 std::cin >> s;
 if (!std::cin) return 0;
 if (s == "q" || s == "Q") return 0;
-while(checkInput(s)!=-1) {return 0;}
+
+int value = checkInput(s);
+
+if (value != -1) {
+    guess = static_cast<uint8_t>(value);
+    motorStatus.turnOff(guess);
+}
 }
 
