@@ -5,24 +5,25 @@
 
 int main() {
 
-    Pikachu pikachu(10);
-    Charmander charmander(12);
-    Bulbasaur bulbasaur(8);
-    Dito dito(9000, &bulbasaur);
+Pikachu pikachu(10);
+Charmander charmander(12);
+Bulbasaur bulbasaur(8);
+Dito dito(9000, &bulbasaur);
 
-    Pokemon* pokemons[] = {
-        &pikachu, &charmander, &bulbasaur, &dito
-    };
+Pokemon* pokemons[] = {
+    &pikachu, &charmander, &bulbasaur, &dito
+};
 
-    printHeader("Pokemon Battle");
+printHeader("Pokemon Battle");
 
-    for (Pokemon* h : pokemons) {
-        h->display();
-        h->attack();
-        h->defend();
-        h->evolve();
-        std::cout << std::endl;
-    }
+for (Pokemon* p : pokemons) {
+    p->display();
+    p->attack();
+    p->defend();
+    p->evolve();
 
-    return 0;
+    std::cout << std::endl;
+}
+
+return 0;
 }

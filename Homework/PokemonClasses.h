@@ -4,14 +4,12 @@
 #include "Pokemon.h"
 
 // Type base class
-
 class PokemonType : public Pokemon {
 public:
     PokemonType(const std::string& name, int level): Pokemon(name, level) {}
 };
 
 // Type-specific classes
-
 class ElectricPokemon : public PokemonType {
 public:
     ElectricPokemon(const std::string& name, int level): PokemonType(name, level) {}
@@ -38,8 +36,6 @@ void defend() const override {
     std::cout << name << " defends with vines!" << std::endl;
 }
 };
-
-// Concrete Pokémon
 
 class Pikachu : public ElectricPokemon {
 public:
